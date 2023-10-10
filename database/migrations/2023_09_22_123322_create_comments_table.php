@@ -6,18 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    // Catagory migration
     public function up()
     {
-        Schema::create('catagory', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->text('catagory');
+            $table->text('comment');
+            $table->foreignId('blog_id');//->constrained('blog');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('catagory');
+        Schema::dropIfExists('comments');
     }
 };

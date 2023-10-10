@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 
-class blog extends Controller
+class CatagoryController extends Controller
 {
     public function index()
     {
-        return view('blog');
+        return view('catagory');
     }
 
     public function create()
     {
         return view('create');
-    }
-
+    }    
 }

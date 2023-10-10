@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,12 +21,17 @@ Route::get('/', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
  
+// blogs .index
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [BlogController::class, 'index'])->name('blogs');
+    
+    //Route::get('/dashboard', function () {
+    //    return view('dashboard');
+    //})->name('dashboard');
 });

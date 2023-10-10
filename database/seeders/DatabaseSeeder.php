@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             PermissionsSeeder::class,
-            catagory::class,
-            blog::class,
-            comment::class,
+            CatagorySeeder::class,
+            BlogSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }

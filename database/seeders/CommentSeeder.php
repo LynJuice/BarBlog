@@ -2,17 +2,15 @@
 
 namespace Database\Seeders;
 
+use Database\Factories\CommentFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class catagory extends Seeder
+class CommentSeeder extends Seeder
 {
     public function run()
     {
-        // seed catagory table
-        DB::table('catagory')->insert([
-            'catagory' => 'This is a catagory',
-        ]);
+        CommentFactory::new()->count(10)->create();
     }
 }

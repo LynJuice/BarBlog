@@ -8,18 +8,18 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('blog', function (Blueprint $table) {
+        Schema::create('blogs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('catagory_id')->constrained('catagories');
+            $table->foreignId('user_id')->constrained('users');
             $table->text('title');
             $table->text('description');
-            $table->foreignId('catagory_id')->constrained('catagory');
-            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('blog');
+        Schema::dropIfExists('blogs');
     }
 };
