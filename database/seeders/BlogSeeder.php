@@ -2,15 +2,18 @@
 
 namespace Database\Seeders;
 
-use Database\Factories\BlogFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Blog;
 
 class BlogSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        BlogFactory::new()->count(10)->create();
+        // use factory to create 10 blogs
+        Blog::factory(10)->create();
     }
 }

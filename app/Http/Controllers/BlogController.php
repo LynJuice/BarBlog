@@ -7,60 +7,82 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    function index()
     {
         $blogs = Blog::all();
-        return view('blog', ['blogs' => $blogs]);
+        return view('blog.index', compact('blogs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    function show(Blog $blog)
     {
-        //
+        return view('blog.show', compact('blog'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    function create()
     {
-        //
+        return view('blog.create');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Blog $blog)
+    function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            // 'image' => 'required',
+        ]);
+
+        $blog = new Blog();
+        $blog->title = $request->title;
+        $blog->description = $request->description;
+
+        if ($request->annonymous == 1) {
+            $blog->user_id = null;
+        } else {
+            $blog->user_id = auth()->user()->id;
+        }
+
+        // $blog->image = $request->image;
+        $blog->save();
+
+        return redirect()->route('blog.index')->with('success', 'Blog created successfully.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Blog $blog)
+    function edit(Blog $blog)
     {
-        //
+        if ($blog->user_id != auth()->user()->id) {
+            return redirect()->route('blog.index')->with('error', 'Šmiki šmiki, negali redaguoti nesavo blogo');
+        }
+        return view('blog.edit', compact('blog'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Blog $blog)
+    function update(Request $request, Blog $blog)
     {
-        //
+        if ($blog->user_id != auth()->user()->id) {
+            return redirect()->route('blog.index')->with('error', 'Šmiki šmiki, negali redaguoti nesavo blogo');
+        }
+
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            // 'image' => 'required',
+        ]);
+
+        $blog->title = $request->title;
+        $blog->description = $request->description;
+        // $blog->image = $request->image;
+        $blog->save();
+
+        return redirect()->route('blog.index')->with('success', 'Blog updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Blog $blog)
+    function destroy(Blog $blog)
     {
-        //
+        if ($blog->user_id != auth()->user()->id) {
+            return redirect()->route('blog.index')->with('error', 'Šmiki šmiki, negali trinti nesavo blogo');
+        }
+
+        $blog->delete();
+
+        return redirect()->route('blog.index')->with('success', 'Blog deleted successfully.');
     }
 }

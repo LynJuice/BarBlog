@@ -8,20 +8,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Blog extends Model
 {
+    use HasFactory;
+
+    // fillable 
     protected $fillable = [
         'title',
         'description',
-        'catagory_id',
-        'user_id'
+        'image',
+        'user_id',
     ];
 
-
-    public function catagory(): BelongsTo
-    {
-        return $this->belongsTo(Catagory::class);
-    }
-
-    public function user(): BelongsTo
+    function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }

@@ -19,12 +19,14 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-
-        $this->call([
-            PermissionsSeeder::class,
-            CatagorySeeder::class,
-            BlogSeeder::class,
-            CommentSeeder::class,
+        // create admin user
+        \App\Models\User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@bar.lt',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ]);
+
+        // run blog seeder
+        $this->call(BlogSeeder::class);
     }
 }

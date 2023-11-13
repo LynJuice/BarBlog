@@ -17,10 +17,9 @@ class BlogFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->word(),
-            'description' => $this->faker->word(),
-            'catagory_id' => '1',
-            'user_id' => '1'
+            'title' => $this->faker->sentence(3),
+            'description' => $this->faker->paragraph(3),
+            'image' => $this->faker->imageUrl(640, 480, 'animals', true),
         ];
     }
 }

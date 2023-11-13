@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\CatagoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,23 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
- 
-// blogs .index
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-
-Route::resource('catagory', CatagoryController::class);
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(function () {
-    //Route::get('/dashboard', [BlogController::class, 'index'])->name('blogs');
-    
+    ])->group(function () {
+    Route::resource('blog', BlogController::class);
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
